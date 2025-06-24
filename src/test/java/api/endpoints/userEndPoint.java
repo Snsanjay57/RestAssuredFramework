@@ -23,37 +23,5 @@ public class userEndPoint {
 			.when()
 			.put(Routes.put_User);
 	}
-	
-//	public static Response getUserDetails(String token) {		
-//		return RestAssured
-//                .given()
-//                    .baseUri(Routes.base_url)
-//                    .basePath("/user")
-//                    .header("Authorization", "Bearer " + token)
-//                    .header("Accept", "*/*")
-//                .when()
-//                    .get()
-//                .then()
-//                    .log().all()  // optional: logs the full response
-//                    .extract().response();
-//	
-//	}
-//	
-//	public static Response updateUser(String token, user requestBody) {		
-//		return RestAssured
-//                .given()
-//                    .baseUri("https://qa.bewizor.com")
-//                    .basePath("/api/user")
-//                    .header("Authorization", "Bearer " + token)
-//                    .header("Accept", "*/*")
-//                    .contentType(ContentType.JSON)
-//                    .body(requestBody)
-//                .when()
-//                    .put()
-//                .then()
-//                    .log().all()
-//                    .extract().response();
-//	
-//	}
 
 }
