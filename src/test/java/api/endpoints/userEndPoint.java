@@ -1,43 +1,27 @@
 package api.endpoints;
 
-
 import api.payload.user;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class userEndPoint {
-	
-	public static String token;
-	
-	public static Response getUserDetial() {
 		
-		Response response = given()
-		.accept(ContentType.JSON)
-		.contentType(ContentType.JSON)
-		.header("Authorization", "Bearer " + token)
-		
-		.when()
-		.get(Routes.get_User);
-		
-		return response;
-	
+	public static Response getUserDetail() {
+		return given()
+			.contentType(ContentType.JSON)
+			.header("Authorization", Routes.token)
+			.when()
+			.get(Routes.get_User);
 	}
-	
-	public static Response updateUserDetial(user payload) {
-		
-		Response response = given()
-		.accept(ContentType.JSON)
-		.contentType(ContentType.JSON)
-		.header("Authorization", "Bearer " + token)
 
-		.body(payload)
-		
-		.when()
-		.get(Routes.put_User);
-		
-		return response;
-	
+	public static Response updateUserDetail(user userPayload) {
+		return given()
+			.contentType(ContentType.JSON)
+			.header("Authorization", Routes.token)
+			.body(userPayload)
+			.when()
+			.put(Routes.put_User);
 	}
 	
 //	public static Response getUserDetails(String token) {		

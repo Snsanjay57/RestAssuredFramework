@@ -1,6 +1,6 @@
 package api.payload;
 
-public class Group {
+public class group {
 	
 	private String groupName;
 	private String groupType;
@@ -8,7 +8,6 @@ public class Group {
 	private String imageData;
 	private String rules;
 	private int assetIDs;
-	
 	
 	public String getGroupName() {
 		return groupName;
@@ -46,8 +45,5 @@ public class Group {
 	public void setAssetIDs(int assetIDs) {
 		this.assetIDs = assetIDs;
 	}
-	
-	
-	
-	
+
 }
