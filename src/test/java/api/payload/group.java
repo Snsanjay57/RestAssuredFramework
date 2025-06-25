@@ -7,7 +7,7 @@ public class group {
 	private String description;
 	private String imageData;
 	private String rules;
-	private Integer assetIDs;
+	private int assetIDs;
 	
 	public String getGroupName() {
 		return groupName;
@@ -39,7 +39,7 @@ public class group {
 	public void setRules(String rules) {
 		this.rules = rules;
 	}
-	public Integer getAssetIDs() {
+	public int getAssetIDs() {
 		return assetIDs;
 	}
 	public void setAssetIDs(int assetIDs) {
