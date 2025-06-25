@@ -1,6 +1,6 @@
 package api.payload;
 
-public class group {
+public class Group {
 	
 	private String groupName;
 	private String groupType;

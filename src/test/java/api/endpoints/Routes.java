@@ -19,4 +19,11 @@ public class Routes {
 	// Group module URLs
 	public static String post_GroupCreate = base_url + "/groups/v1";
 	public static String get_GroupList = base_url + "/groups/allGroups";
+	
+	//Space creation URL's
+	public static String post_SpaceCreate = base_url + "/v2/spaces/register";
+	public static String get_AllSpaces = base_url + "/v1/spaces";
+	public static String delete_SpaceCreate = base_url + "/v1/spaces/940817484?confirm=true&newSpaceId=940596395";
+	
+	
 }

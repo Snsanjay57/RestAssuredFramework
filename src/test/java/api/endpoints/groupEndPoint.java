@@ -1,13 +1,13 @@
 package api.endpoints;
 
-import api.payload.group;
+import api.payload.Group;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
-public class groupEndPoint {
+public class GroupEndPoint {
 
-	public static Response postGroupCreate(group groupPayload) {
+	public static Response postGroupCreate(Group groupPayload) {
 		System.out.println("Payload JSON => " + new com.google.gson.Gson().toJson(groupPayload));
 		System.out.println("-------------------");
 

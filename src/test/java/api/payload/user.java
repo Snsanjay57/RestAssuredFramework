@@ -2,7 +2,7 @@ package api.payload;
 
 import java.util.Date;
 
-public class user {
+public class User {
 
 	// Create POJO (Plain Old Java Object) class
 	  private String firstName;

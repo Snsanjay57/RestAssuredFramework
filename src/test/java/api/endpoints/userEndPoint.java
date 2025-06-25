@@ -1,11 +1,11 @@
 package api.endpoints;
 
-import api.payload.user;
+import api.payload.User;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
-public class userEndPoint {
+public class UserEndPoint {
 		
 	public static Response getUserDetail() {
 		return given()
@@ -15,7 +15,7 @@ public class userEndPoint {
 			.get(Routes.get_User);
 	}
 
-	public static Response updateUserDetail(user userPayload) {
+	public static Response updateUserDetail(User userPayload) {
 		return given()
 			.contentType(ContentType.JSON)
 			.header("Authorization", Routes.token)
