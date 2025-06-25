@@ -20,10 +20,7 @@ public class GroupTest {
 
 		groupPayload.setGroupName(faker.team().name());
 		groupPayload.setGroupType("ADMIN");
-//		groupPayload.setRules(faker.lorem().paragraph());
-//		groupPayload.setDescription(faker.lorem().sentence());
-//		groupPayload.setAssetIDs(faker.number().numberBetween(1000, 9999));
-//		groupPayload.setImageData(null); // if no image
+
 	}
 
 	@Test(priority = 3)
