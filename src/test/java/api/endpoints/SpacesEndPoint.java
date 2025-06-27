@@ -57,10 +57,10 @@ public class SpacesEndPoint {
 
 	}
 	
-		public static Response deleteCreatedSpace(int spaceId) {
+		public static Response deleteCreatedSpace(int createdSpaceId, int spaceOneId) {
 			return given()
 					.baseUri(Routes.base_url)
-					.basePath("/v1/spaces/"+spaceId+"?confirm=true&newSpaceId=940596395")
+					.basePath("/v1/spaces/"+ createdSpaceId +"?confirm=true&newSpaceId="+spaceOneId+"")
 					.header("Authorization", Routes.token)
 					.when()
 					.delete();
