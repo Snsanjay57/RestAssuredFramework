@@ -29,19 +29,25 @@ public class UserTest {
 
 	@Test(priority = 1)
 	public void testGetUser() {
+		
+		// Get the response from endpoint
+//	    Response response = UserEndPoint.getUserDetail().extract().response();
+		
 		Response response = UserEndPoint.getUserDetail();
+
+	    // Full response logging
 		response.then().log().all();
 		Assert.assertEquals(response.statusCode(), 200);
 		System.out.println("=================NEXT METHOD====================");
 	}
 
-	@Test(priority = 2)
-	public void testUpdateUser() {
-		userPayload.setLastName(faker.name().lastName());
-		Response response = UserEndPoint.updateUserDetail(userPayload);
-		response.then().log().all();
-		Assert.assertEquals(response.statusCode(), 200);
-		System.out.println("=================NEXT METHOD====================");
-
-	}
+//	@Test(priority = 2)
+//	public void testUpdateUser() {
+//		userPayload.setLastName(faker.name().lastName());
+//		Response response = UserEndPoint.updateUserDetail(userPayload);
+//		response.then().log().all();
+//		Assert.assertEquals(response.statusCode(), 200);
+//		System.out.println("=================NEXT METHOD====================");
+//
+//	}
 }

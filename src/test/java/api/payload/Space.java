@@ -1,5 +1,7 @@
 package api.payload;
 
+import java.io.File;
+
 public class Space {
 	
 	private String spaceName;
@@ -11,7 +13,7 @@ public class Space {
     private String selected; 
     private String type; //OTHER
     private String imageFrom; //CAMERA
-    private String imageData;  // ✅ New field added
+    private File imageData;  // ✅ New field added
     
 	public String getSpaceName() {
 		return spaceName;
@@ -67,11 +69,16 @@ public class Space {
 	public void setImageFrom(String imageFrom) {
 		this.imageFrom = imageFrom;
 	}
-	public String getImageData() {
+	public File getImageData() {
 		return imageData;
 	}
-	public void setImageData(String imageData) {
+	public void setImageData(File imageData) {
 		this.imageData = imageData;
+	}
+	public void setSpaceId(int spaceId) {
+		// TODO Auto-generated method stub
+		
+		
 	}
     
     

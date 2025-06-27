@@ -23,14 +23,14 @@ public class GroupTest {
 
 	}
 
-//	@Test(priority = 3)
-//	public void testCreateGroup() {
-//		Response response = GroupEndPoint.postGroupCreate(groupPayload);
-//		response.then().log().all();
-//		Assert.assertEquals(response.statusCode(), 201);
-//		System.out.println("=================NEXT METHOD====================");
-//
-//	}
+	@Test(priority = 3)
+	public void testCreateGroup() {
+		Response response = GroupEndPoint.createGroup(groupPayload);
+		response.then().log().all();
+		Assert.assertEquals(response.statusCode(), 201);
+		System.out.println("=================NEXT METHOD====================");
+
+	}
 
 	@Test(priority = 4)
 	public void testGetGroupList() {

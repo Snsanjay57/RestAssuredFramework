@@ -6,7 +6,7 @@
       <class name="api.testcases.SpaceTest">
         <methods>
           <include name="setupData"/>
-          <include name="testSpaceCreate"/>
+          <include name="testDeleteCreatedSpace"/>
         </methods>
       </class> <!-- api.testcases.SpaceTest -->
     </classes>
