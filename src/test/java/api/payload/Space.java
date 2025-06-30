@@ -12,8 +12,8 @@ public class Space {
     private String createdFlag;
     private String selected; 
     private String type; //OTHER
-    private String imageFrom; //CAMERA
-    private File imageData;  // ✅ New field added
+    public String imageFrom; //CAMERA
+    public  File imageData;  // ✅ New field added
     
 	public String getSpaceName() {
 		return spaceName;

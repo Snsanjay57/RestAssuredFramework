@@ -2,39 +2,76 @@ package api.endpoints;
 
 import static io.restassured.RestAssured.given;
 
-import org.testng.annotations.Test;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
 import api.payload.Space;
-import api.testcases.SpaceTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class SpacesEndPoint {
-
+	//	Object file;
 	public static Response createSpace(Space spacePayload) {
+
+		//		// 1) Post method by HashMap
+		//		Map<String,Object> m = new HashMap<>();
+		//		m.put("spaceName", spacePayload.getSpaceName());
+		//		m.put("locationName", spacePayload.getLocationName());
+		////		m.put("gpsLatitude",  spacePayload.getGpsLatitude());
+		////		m.put("gpsLongitude", spacePayload.getGpsLongitude());
+		//		m.put("spaceOrder",   spacePayload.getSpaceOrder());
+		//		m.put("createdFlag",  spacePayload.getCreatedFlag());
+		//		m.put("selected",     spacePayload.getSelected());
+		//		m.put("type",         spacePayload.getType());
+		//		m.put("imageData",    spacePayload.getImageData());
+		//// 		String spaceRequestJson = new Gson().toJson(m); 
+		////		System.out.println("-----------"+spaceRequestJson+"-------------");	  {"spaceName":"Maryland conspirators","createdFlag":"true","locationName":"Jaipur, Durgapura, Jaipur Division, Rajasthan, 302018, Jaipur Division, India","imageFrom":"CAMERA","spaceOrder":"0","type":"OTHER","selected":"false"}-------------
+		////
+		////		System.out.println("-----------"+m+"-------------");   {spaceName=Maryland conspirators, createdFlag=true, locationName=Jaipur, Durgapura, Jaipur Division, Rajasthan, 302018, Jaipur Division, India, imageFrom=CAMERA, spaceOrder=0, type=OTHER, selected=false}
+		//
+		//
+		//		return given()
+		//				.baseUri(Routes.base_url)
+		//				.basePath("/v2/spaces/register")
+		//				.header("Authorization", Routes.token)
+		//				.multiPart("imageData", m.get("imageData"))                 // file
+		////				.multiPart("spaceRequest", spaceRequestJson, "application/json")     // json
+		//				.multiPart("spaceRequest", m, "application/json")
+		//			   .when()
+		//				.post();
+
+
+		// 2) Post method by JSON library
+		JSONObject m = new JSONObject();
+		m.put("spaceName", spacePayload.getSpaceName());
+		m.put("locationName", spacePayload.getLocationName());
+		m.put("spaceOrder", spacePayload.getSpaceOrder());
+		m.put("createdFlag", spacePayload.getCreatedFlag());
+		m.put("selected", spacePayload.getSelected());
+		m.put("type", spacePayload.getType());
+		m.put("imageFrom", spacePayload.getImageFrom());
+		m.put("imageData", spacePayload.getImageData()); 
+		// m is a JSONObject that holds key-value pairs to be sent as JSON (excluding the image file).
+		// imageData is a File (or something similar) that needs to be sent as a separate multipart field, not inside the JSON body
 		
-		// 1) either mark imageData transient...
-//		Map<String,Object> m = new HashMap<>();
-//		m.put("spaceName",    spacePayload.getSpaceName());
-//		m.put("locationName", spacePayload.getLocationName());
-////		m.put("gpsLatitude",  spacePayload.getGpsLatitude());
-////		m.put("gpsLongitude", spacePayload.getGpsLongitude());
-//		m.put("spaceOrder",   spacePayload.getSpaceOrder());
-//		m.put("createdFlag",  spacePayload.getCreatedFlag());
-//		m.put("selected",     spacePayload.getSelected());
-//		m.put("type",         spacePayload.getType());
-//		m.put("imageFrom",    spacePayload.getImageFrom());
-//		String spaceRequestJson = new Gson().toJson(m);
+		Object imageFile = m.get("imageData"); // Store the file
+		m.remove("imageData");                 // Remove file from JSON data
+
+		String spaceRequestJson = new Gson().toJson(m.toMap());
 
 		return given()
 				.baseUri(Routes.base_url)
 				.basePath("/v2/spaces/register")
 				.header("Authorization", Routes.token)
-				.multiPart("imageData", spacePayload.getImageData())                 // file
-//				.multiPart("spaceRequest", spaceRequestJson, "application/json")     // json
-				.multiPart("spaceRequest", spacePayload, "application/json")
+				.multiPart("imageData", imageFile) // file
+				.multiPart("spaceRequest", spaceRequestJson, "application/json")
+
 				.when()
 				.post();
+
 	}
 
 
@@ -56,15 +93,15 @@ public class SpacesEndPoint {
 				.get();
 
 	}
-	
-		public static Response deleteCreatedSpace(int spaceId) {
-			return given()
-					.baseUri(Routes.base_url)
-					.basePath("/v1/spaces/"+spaceId+"?confirm=true&newSpaceId=940596395")
-					.header("Authorization", Routes.token)
-					.when()
-					.delete();
-		}
+
+	public static Response deleteCreatedSpace(int spaceId) {
+		return given()
+				.baseUri(Routes.base_url)
+				.basePath("/v1/spaces/"+spaceId+"?confirm=true&newSpaceId=940596395")
+				.header("Authorization", Routes.token)
+				.when()
+				.delete();
+	}
 
 
 }

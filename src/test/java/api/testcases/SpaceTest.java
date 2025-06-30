@@ -19,8 +19,8 @@ public class SpaceTest {
 
     Faker faker;
     Space spacePayload;
-    public static int spaceId;
-    public static int spaceOneId;
+    private int spaceId;
+    private int spaceOneId;
 
     @BeforeClass
     public void setupData() throws IOException {
@@ -92,7 +92,6 @@ public class SpaceTest {
 		Response response = SpacesEndPoint.deleteCreatedSpace(spaceId);
 		response.then().log().all();
 		Assert.assertEquals(response.statusCode(), 200);
-		
 		
 	}
 }
