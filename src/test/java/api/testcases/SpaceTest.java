@@ -89,7 +89,7 @@ public class SpaceTest {
     
     @Test (priority = 3) 
 	public void testDeleteCreatedSpace() {
-		Response response = SpacesEndPoint.deleteCreatedSpace(spaceId);
+		Response response = SpacesEndPoint.deleteCreatedSpace(spaceId, spaceOneId);
 		response.then().log().all();
 		Assert.assertEquals(response.statusCode(), 200);
 		

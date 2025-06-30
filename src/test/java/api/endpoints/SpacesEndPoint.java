@@ -93,6 +93,7 @@ public class SpacesEndPoint {
 				.get();
 
 	}
+<<<<<<< HEAD
 
 	public static Response deleteCreatedSpace(int spaceId) {
 		return given()
@@ -102,6 +103,17 @@ public class SpacesEndPoint {
 				.when()
 				.delete();
 	}
+=======
+	
+		public static Response deleteCreatedSpace(int createdSpaceId, int spaceOneId) {
+			return given()
+					.baseUri(Routes.base_url)
+					.basePath("/v1/spaces/"+ createdSpaceId +"?confirm=true&newSpaceId="+spaceOneId+"")
+					.header("Authorization", Routes.token)
+					.when()
+					.delete();
+		}
+>>>>>>> 567a50141dcc20320bbf3a915defaa16a8defdeb
 
 
 }
