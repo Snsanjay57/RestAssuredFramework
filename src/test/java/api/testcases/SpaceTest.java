@@ -40,7 +40,7 @@ public class SpaceTest {
         // Set file image
 //        String imagePath = "C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg";
 //        File imageFile = new File(imagePath);
-        spacePayload.setImageData(new File("C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg"));
+        spacePayload.setImageData(new File("C:\\Users\\Snjy\\Pictures\\Passport.jpeg"));
     }
     
     @Test (priority = 1)

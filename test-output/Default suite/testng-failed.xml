@@ -3,12 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="api.testcases.GroupTest">
+      <class name="api.testcases.SpaceTest">
         <methods>
           <include name="setupData"/>
-          <include name="testCreateGroup"/>
+          <include name="testSpaceCreate"/>
+          <include name="testDeleteCreatedSpace"/>
         </methods>
-      </class> <!-- api.testcases.GroupTest -->
+      </class> <!-- api.testcases.SpaceTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
