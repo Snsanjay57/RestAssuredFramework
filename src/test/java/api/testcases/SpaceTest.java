@@ -40,11 +40,11 @@ public class SpaceTest {
         // Set file image
 //        String imagePath = "C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg";
 //        File imageFile = new File(imagePath);
-        spacePayload.setImageData(new File("C:\\Users\\Snjy\\Pictures\\Passport.jpeg"));
+        spacePayload.setImageData(new File("C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg"));
     }
     
     @Test (priority = 1)
-    public void testSpaceCreate() {
+    public void testSpaceCreate() throws IOException {
 		System.out.println("=================NEXT METHOD====================");
 
     	Response response = SpacesEndPoint.createSpace(spacePayload);
@@ -63,6 +63,7 @@ public class SpaceTest {
     
     @Test (priority = 2)
     public void testGetSpaceList() {
+		System.out.println("=================NEXT METHOD====================");
 
     	Response response = SpacesEndPoint.getSpaceList();
 		response.then().log().all();
@@ -89,6 +90,9 @@ public class SpaceTest {
     
     @Test (priority = 3) 
 	public void testDeleteCreatedSpace() {
+    	
+		System.out.println("=================NEXT METHOD====================");
+
 		Response response = SpacesEndPoint.deleteCreatedSpace(spaceId, spaceOneId);
 		response.then().log().all();
 		Assert.assertEquals(response.statusCode(), 200);

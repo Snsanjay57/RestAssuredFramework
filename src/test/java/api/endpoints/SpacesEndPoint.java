@@ -2,20 +2,21 @@ package api.endpoints;
 
 import static io.restassured.RestAssured.given;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
-import org.codehaus.groovy.runtime.callsite.PerInstancePojoMetaClassSite;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
-import com.google.gson.Gson;
 import api.payload.Space;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class SpacesEndPoint {
 
-	public static Response createSpace(Space spacePayload) {
+	public static Response createSpace(Space spacePayload) throws IOException {
 
 		// 1) Post method by HashMap
 //		Map<String,Object> m = new HashMap<>();
@@ -71,28 +72,58 @@ public class SpacesEndPoint {
 
 
 		// 3) Post method by POJO class (Plain old java object
+//		Faker faker= new Faker();
+//		Space pojoClass = new Space();
+//		pojoClass.setSpaceName(faker.team().name());
+//		pojoClass.setLocationName("Jaipur, Durgapura, Jaipur Division, Rajasthan, 302018, Jaipur Division, India");
+//		pojoClass.setSpaceOrder("0");
+//		pojoClass.setCreatedFlag("true");
+//		pojoClass.setSelected("false");
+//		pojoClass.setType("OTHER");
+//		pojoClass.setImageFrom("CAMERA");
+//
+//		pojoClass.setImageData(new File("C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg"));
+//		pojoClass = spacePayload -- > Both are same trick.
 
-		Space pojoClass = new Space();
-		pojoClass.getSpaceName();
-		pojoClass.getLocationName();
-		pojoClass.getSpaceOrder();
-		pojoClass.getCreatedFlag();
-		pojoClass.getSelected();
-		pojoClass.getType();
+//		return given()
+//				.baseUri(Routes.base_url)
+//				.basePath("/v2/spaces/register")
+//				.header("Authorization", Routes.token)
+//				.multiPart("imageData", spacePayload.getImageData() ) // file
+//				.multiPart("spaceRequest", spacePayload, "application/json")
+//
+//				.when()
+//				.post();
 		
-		System.out.println("++++"+pojoClass.getSpaceName());
+//		4) Post method by External JSON file
+		File file = new File(".\\SpaceCreateJsonBody.json");
 
+		try (FileReader reader = new FileReader(file)) {
+		    JSONTokener jsonToken = new JSONTokener(reader);
+		    JSONObject jsonObject = new JSONObject(jsonToken);
 
-		return given()
-				.baseUri(Routes.base_url)
-				.basePath("/v2/spaces/register")
-				.header("Authorization", Routes.token)
-				.multiPart("imageData", pojoClass.getImageData() ) // file
-				.multiPart("spaceRequest", pojoClass, "application/json")
+		    // Add image data separately (do not serialize file to JSON)
+		    jsonObject.put("imageData", spacePayload.getImageData());
 
-				.when()
-				.post();
+		    Object imageFile = jsonObject.get("imageData");
+		    jsonObject.remove("imageData");
 
+		    return given()
+		        .baseUri(Routes.base_url)
+		        .basePath("/v2/spaces/register")
+		        .header("Authorization", Routes.token)
+		        .multiPart("imageData", imageFile)
+		        .multiPart("spaceRequest", jsonObject.toString(), "application/json")
+		        .when()
+		        .post();
+
+		} catch (IOException e) {
+		    e.printStackTrace();
+		    return null; // Or handle gracefully
+		}
+
+		
+		
 	}
 
 
