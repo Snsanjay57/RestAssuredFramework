@@ -13,13 +13,13 @@ public class UserEndPoint {
 
 	public static Response getUserDetail() {
 		return given()
-				.contentType(ContentType.JSON)
+				.contentType(ContentType.JSON)  // Optional, but good practice to specify content type
 				.header("Authorization", Routes.token)
 				.when()
 				.get(Routes.get_User);
-		//      .then()
-		//      .statusCode(200)
-		//      .body("firstName", equalTo("Ravi")); // Adjust this if the JSON structure is different
+//		      .then()
+//		      .statusCode(200)
+//		      .body("firstName", equalTo("Ravi")); // Adjust this if the JSON structure is different
 	}
 
 	public static Response updateUserDetail(User userPayload) {

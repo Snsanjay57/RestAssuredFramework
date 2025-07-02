@@ -3,12 +3,13 @@ package api.endpoints;
 import static io.restassured.RestAssured.given;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import com.google.gson.Gson;
 
 import api.payload.Space;
 import io.restassured.http.ContentType;
@@ -18,7 +19,7 @@ public class SpacesEndPoint {
 
 	public static Response createSpace(Space spacePayload) throws IOException {
 
-		// 1) Post method by HashMap
+//		//		1) Post method by HashMap
 //		Map<String,Object> m = new HashMap<>();
 //		m.put("spaceName", spacePayload.getSpaceName());
 //		m.put("locationName", spacePayload.getLocationName());
@@ -40,9 +41,9 @@ public class SpacesEndPoint {
 //				.multiPart("spaceRequest", m, "application/json")
 //				.when()
 //				.post();
-
-
-		// 2) Post method by JSON library
+//
+//
+//		//		 2) Post method by JSON library
 //		JSONObject m = new JSONObject();
 //		m.put("spaceName", spacePayload.getSpaceName());
 //		m.put("locationName", spacePayload.getLocationName());
@@ -59,6 +60,9 @@ public class SpacesEndPoint {
 //		m.remove("imageData");                 // Remove file from JSON data
 //
 //		String spaceRequestJson = new Gson().toJson(m.toMap());
+//		//				System.out.println(spaceRequestJson); // {"spaceName":"Nebraska ","createdFlag":"true","locationName":"Jaipur, Durgapura, Jaipur Division, Rajasthan, 302018, Jaipur Division, India","imageFrom":"CAMERA","spaceOrder":"0","type":"OTHER","selected":"false"}
+//		//				System.out.println(m);                // {"spaceName":"Nebraska ","createdFlag":"true","locationName":"Jaipur, Durgapura, Jaipur Division, Rajasthan, 302018, Jaipur Division, India","imageFrom":"CAMERA","spaceOrder":"0","type":"OTHER","selected":"false"}
+//		//				System.out.println(m.toString());	 //  {"spaceName":"Nebraska","createdFlag":"true","locationName":"Jaipur, Durgapura, Jaipur Division, Rajasthan, 302018, Jaipur Division, India","imageFrom":"CAMERA","spaceOrder":"0","type":"OTHER","selected":"false"}
 //
 //		return given()
 //				.baseUri(Routes.base_url)
@@ -66,12 +70,14 @@ public class SpacesEndPoint {
 //				.header("Authorization", Routes.token)
 //				.multiPart("imageData", imageFile) // file
 //				.multiPart("spaceRequest", spaceRequestJson, "application/json")
+//				//		 Also working 	.multiPart("spaceRequest", m.toString(), "application/json")
+//				//		  Not Working   .multiPart("spaceRequest", m.toString(), "application/json")
 //
 //				.when()
 //				.post();
-
-
-		// 3) Post method by POJO class (Plain old java object
+//
+//
+//		// 3) Post method by POJO class (Plain old java object
 //		Faker faker= new Faker();
 //		Space pojoClass = new Space();
 //		pojoClass.setSpaceName(faker.team().name());
@@ -83,47 +89,55 @@ public class SpacesEndPoint {
 //		pojoClass.setImageFrom("CAMERA");
 //
 //		pojoClass.setImageData(new File("C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg"));
-//		pojoClass = spacePayload -- > Both are same trick.
-
+//		//				pojoClass = spacePayload -- > Both are same trick.
+//
 //		return given()
 //				.baseUri(Routes.base_url)
 //				.basePath("/v2/spaces/register")
 //				.header("Authorization", Routes.token)
-//				.multiPart("imageData", spacePayload.getImageData() ) // file
-//				.multiPart("spaceRequest", spacePayload, "application/json")
+//				.multiPart("imageData", pojoClass.getImageData() ) // file
+//				.multiPart("spaceRequest", pojoClass, "application/json")
 //
 //				.when()
 //				.post();
+//
+		//		4) Post method by External JSON file
+//		File jsonFile = new File("src/test/resources/SpaceCreateJsonBody.json");
+//
+//		try (FileReader reader = new FileReader(jsonFile)) {
+//			JSONTokener jsonToken = new JSONTokener(reader);
+//			JSONObject jsonObject = new JSONObject(jsonToken);
+//
+//			// Extract the image path and load it as a File
+//			String imagePath = "C:\\Users\\SanjayMeena\\Pictures\\Bird.jpg";
+//			File imageFile = new File(imagePath);
+//
+//			// Remove the image path from JSON (if you don't want to send it inside the body)
+//			jsonObject.remove("imageData");
+//
+//			return given()
+//					.baseUri(Routes.base_url)
+//					.basePath("/v2/spaces/register")
+//					.header("Authorization", Routes.token)
+//					.multiPart("imageData", imageFile) // actual file here
+//					.multiPart("spaceRequest", jsonObject.toString(), "application/json") // safe now
+//					.when()
+//					.post();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
 		
-//		4) Post method by External JSON file
-		File file = new File(".\\SpaceCreateJsonBody.json");
-
-		try (FileReader reader = new FileReader(file)) {
-		    JSONTokener jsonToken = new JSONTokener(reader);
-		    JSONObject jsonObject = new JSONObject(jsonToken);
-
-		    // Add image data separately (do not serialize file to JSON)
-		    jsonObject.put("imageData", spacePayload.getImageData());
-
-		    Object imageFile = jsonObject.get("imageData");
-		    jsonObject.remove("imageData");
-
-		    return given()
-		        .baseUri(Routes.base_url)
-		        .basePath("/v2/spaces/register")
-		        .header("Authorization", Routes.token)
-		        .multiPart("imageData", imageFile)
-		        .multiPart("spaceRequest", jsonObject.toString(), "application/json")
-		        .when()
-		        .post();
-
-		} catch (IOException e) {
-		    e.printStackTrace();
-		    return null; // Or handle gracefully
-		}
-
 		
-		
+		return given()
+		.baseUri(Routes.base_url)
+		.basePath("/v2/spaces/register")
+		.header("Authorization", Routes.token)
+		.multiPart("imageData", spacePayload.imageData) // actual file here
+		.multiPart("spaceRequest", spacePayload, "application/json") // safe now
+		.when()
+		.post();
 	}
 
 
